@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_breeds"
+        android:title="Breeds"
+        android:icon="@drawable/icon_breed"/>
+
+    <item
+        android:id="@+id/nav_adoption"
+        android:title="Adoption"
+        android:icon="@drawable/icon_adoption"/>
+
+    <item
+        android:id="@+id/nav_store"
+        android:title="Store"
+        android:icon="@drawable/icon_store"/>
+
+    <item
+        android:id="@+id/nav_chat"
+        android:title="Chat"
+        android:icon="@drawable/icon_chat"/>
+
+</menu>

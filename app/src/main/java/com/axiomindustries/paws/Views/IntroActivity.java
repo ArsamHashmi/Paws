@@ -1,79 +1,213 @@
 package com.axiomindustries.paws.Views;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
+import com.axiomindustries.paws.Adapters.AdapterIntroViewPager;
+import com.axiomindustries.paws.Models.ItemIntroScreen;
 import com.axiomindustries.paws.R;
-import com.github.appintro.AppIntro;
-import com.github.appintro.AppIntroFragment;
-import com.github.appintro.AppIntroPageTransformerType;
+import com.google.android.material.tabs.TabLayout;
 
-public class IntroActivity extends AppIntro {
+import java.util.ArrayList;
+import java.util.List;
+
+public class IntroActivity extends AppCompatActivity {
+
+    private ViewPager screenPager;
+    AdapterIntroViewPager introViewPagerAdapter ;
+    TabLayout tabIndicator;
+    Button btnNext;
+    int position = 0 ;
+    Button btnGetStarted;
+    Animation btnAnim ;
+    TextView tvSkip;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // make the activity on full screen
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
+        // when this activity is about to be launch we need to check if its openened before or not
+
+        if (restorePrefData()) {
+//            Intent mainActivity = new Intent(getApplicationContext(),LoginActivity.class );
+//            startActivity(mainActivity);
+//            finish();
+        }
+
         setContentView(R.layout.activity_intro);
 
-        addSlide(AppIntroFragment.createInstance("Welcome!",
-                "This is a demo example in java of AppIntro library, with a custom background on each slide!",
-                R.drawable.logo));
+        // hide the action bar
 
-        addSlide(AppIntroFragment.createInstance(
-                "Clean App Intros",
-                "This library offers developers the ability to add clean app intros at the start of their apps.",
-                R.drawable.google_icon
-        ));
+        getSupportActionBar().hide();
 
-        addSlide(AppIntroFragment.createInstance(
-                "Simple, yet Customizable",
-                "The library offers a lot of customization, while keeping it simple for those that like simple.",
-                R.drawable.logo
-        ));
+        // ini views
+        btnNext = findViewById(R.id.btn_next);
+        btnGetStarted = findViewById(R.id.btn_get_started);
+        tabIndicator = findViewById(R.id.tab_indicator);
+        btnAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.button_animation);
+        tvSkip = findViewById(R.id.tv_skip);
+
+        // fill list screen
+
+        final List<ItemIntroScreen> mList = new ArrayList<>();
+        mList.add(new ItemIntroScreen("Discover","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit",R.drawable.img1));
+        mList.add(new ItemIntroScreen("Adopt","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit",R.drawable.img2));
+        mList.add(new ItemIntroScreen("Shop","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit",R.drawable.img3));
+
+        // setup viewpager
+        screenPager =findViewById(R.id.screen_viewpager);
+        introViewPagerAdapter = new AdapterIntroViewPager(this,mList);
+        screenPager.setAdapter(introViewPagerAdapter);
+
+        // setup tablayout with viewpager
+
+        tabIndicator.setupWithViewPager(screenPager);
+
+        // next button click Listener
+
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                position = screenPager.getCurrentItem();
+                if (position < mList.size()) {
+
+                    position++;
+                    screenPager.setCurrentItem(position);
 
 
-        // Fade Transition
-        setTransformer(AppIntroPageTransformerType.Fade.INSTANCE);
+                }
 
-        // Show/hide status bar
-        showStatusBar(true);
+                if (position == mList.size()-1) { // when we rech to the last screen
 
-        //Speed up or down scrolling
-        setScrollDurationFactor(2);
+                    // TODO : show the GETSTARTED Button and hide the indicator and the next button
 
-        //Enable the color "fade" animation between two slides (make sure the slide implements SlideBackgroundColorHolder)
-        setColorTransitionsEnabled(true);
+                    loaddLastScreen();
 
-        //Prevent the back button from exiting the slides
-        setSystemBackButtonLocked(true);
 
-        //Activate wizard mode (Some aesthetic changes)
-        setWizardMode(true);
+                }
 
-        //Show/hide skip button
-        setSkipButtonEnabled(true);
 
-        //Enable immersive mode (no status and nav bar)
-        setImmersiveMode();
 
-        //Enable/disable page indicators
-        setIndicatorEnabled(true);
+            }
+        });
 
-        //Dhow/hide ALL buttons
-        setButtonsEnabled(true);
+        // tablayout add change listener
+
+
+        tabIndicator.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+                if (tab.getPosition() == mList.size()-1) {
+
+                    loaddLastScreen();
+
+                }
+
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+
+
+        // Get Started button click listener
+
+        btnGetStarted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                //open main activity
+
+                Intent mainActivity = new Intent(getApplicationContext(),LoginActivity.class);
+                startActivity(mainActivity);
+                // also we need to save a boolean value to storage so next time when the user run the app
+                // we could know that he is already checked the intro screen activity
+                // i'm going to use shared preferences to that process
+                savePrefsData();
+                finish();
+
+
+
+            }
+        });
+
+        // skip button click listener
+
+        tvSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                screenPager.setCurrentItem(mList.size());
+            }
+        });
+
+
+
     }
 
-    @Override
-    protected void onSkipPressed(Fragment currentFragment) {
-        super.onSkipPressed(currentFragment);
-        finish();
+    private boolean restorePrefData() {
+
+
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("myPrefs",MODE_PRIVATE);
+        Boolean isIntroActivityOpnendBefore = pref.getBoolean("isIntroOpnend",false);
+        return  isIntroActivityOpnendBefore;
+
+
+
     }
 
-    @Override
-    protected void onDonePressed(Fragment currentFragment) {
-        super.onDonePressed(currentFragment);
-        finish();
+    private void savePrefsData() {
+
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("myPrefs",MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean("isIntroOpnend",true);
+        editor.commit();
+
+
+    }
+
+    // show the GETSTARTED Button and hide the indicator and the next button
+    private void loaddLastScreen() {
+
+        btnNext.setVisibility(View.INVISIBLE);
+        btnGetStarted.setVisibility(View.VISIBLE);
+        tvSkip.setVisibility(View.INVISIBLE);
+        tabIndicator.setVisibility(View.INVISIBLE);
+        // TODO : ADD an animation the getstarted button
+        // setup animation
+        btnGetStarted.setAnimation(btnAnim);
+
+
+
     }
 }

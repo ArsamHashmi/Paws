@@ -3,9 +3,25 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/arsam/AndroidStudioProjects/Paws/app/src/main/res/drawable/breeds_recycler_item_bottom.xml" value="0.112" />
+        <entry key="..\:/Users/arsam/AndroidStudioProjects/Paws/app/src/main/res/drawable/breeds_recylcer_item_top.xml" value="0.11" />
+        <entry key="..\:/Users/arsam/AndroidStudioProjects/Paws/app/src/main/res/drawable/btn_gradient_style.xml" value="0.1" />
+        <entry key="..\:/Users/arsam/AndroidStudioProjects/Paws/app/src/main/res/drawable/view_top_rounded.xml" value="0.1225" />
+        <entry key="..\:/Users/arsam/AndroidStudioProjects/Paws/app/src/main/res/layout-v23/activity_intro.xml" value="0.1" />
+        <entry key="..\:/Users/arsam/AndroidStudioProjects/Paws/app/src/main/res/layout/activity_breeds.xml" value="0.2" />
+        <entry key="..\:/Users/arsam/AndroidStudioProjects/Paws/app/src/main/res/layout/activity_dashboard.xml" value="0.152" />
+        <entry key="..\:/Users/arsam/AndroidStudioProjects/Paws/app/src/main/res/layout/activity_intro.xml" value="0.152" />
         <entry key="..\:/Users/arsam/AndroidStudioProjects/Paws/app/src/main/res/layout/activity_login.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/arsam/AndroidStudioProjects/Paws/app/src/main/res/layout/activity_sign_up.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/arsam/AndroidStudioProjects/Paws/app/src/main/res/layout/activity_splash.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/arsam/AndroidStudioProjects/Paws/app/src/main/res/layout/content_pet_recommended.xml" value="0.264" />
+        <entry key="..\:/Users/arsam/AndroidStudioProjects/Paws/app/src/main/res/layout/content_scrolling.xml" value="0.22940776038121172" />
+        <entry key="..\:/Users/arsam/AndroidStudioProjects/Paws/app/src/main/res/layout/fragment_adoption.xml" value="0.1421875" />
+        <entry key="..\:/Users/arsam/AndroidStudioProjects/Paws/app/src/main/res/layout/fragment_breed.xml" value="0.2" />
+        <entry key="..\:/Users/arsam/AndroidStudioProjects/Paws/app/src/main/res/layout/item_recycler_adoption.xml" value="0.264" />
+        <entry key="..\:/Users/arsam/AndroidStudioProjects/Paws/app/src/main/res/layout/item_recycler_breeds.xml" value="0.2" />
+        <entry key="..\:/Users/arsam/AndroidStudioProjects/Paws/app/src/main/res/layout/layout_screen.xml" value="0.11875" />
+        <entry key="..\:/Users/arsam/AndroidStudioProjects/Paws/app/src/main/res/menu/main_bottom_navigation.xml" value="0.13125" />
       </map>
     </option>
   </component>
